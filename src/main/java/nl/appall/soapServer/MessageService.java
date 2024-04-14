@@ -1,3 +1,5 @@
+package nl.appall.soapServer;
+
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
