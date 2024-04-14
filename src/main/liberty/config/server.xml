@@ -1,0 +1,39 @@
+<server description="Soap Server">
+
+    <!-- Enabling features -->
+    <featureManager>
+        <feature>jaxws-2.2</feature> <!-- or jaxws-2.3 if available and needed -->
+        <feature>javaee-8.0</feature>
+        <feature>jdbc-4.2</feature>
+        <feature>cdi-2.0</feature>
+        <feature>jpa-2.2</feature>
+        <!-- Additional features as needed -->
+    </featureManager>
+
+    <!-- Define a library for JPA using Hibernate -->
+    <library id="HibernateLib">
+        <fileset dir="${shared.resource.dir}/hibernate/" includes="*.jar"/>
+    </library>
+
+    <!-- DataSource configuration -->
+    <dataSource jndiName="jdbc/MyDataSource" jdbcDriverRef="MySQLDriver">
+        <properties url="jdbc:mysql://localhost:3306/mydb" user="user" password="password"/>
+    </dataSource>
+
+    <!-- JDBC Driver configuration -->
+    <jdbcDriver id="MySQLDriver" libraryRef="MySQLLib"/>
+
+    <library id="MySQLLib">
+        <file name="${shared.resource.dir}/mysql/mysql-connector-java.jar"/>
+    </library>
+
+    <!-- Application definition -->
+    <webApplication id="soapJpaHibernate" location="soapJpaHibernate.war" name="SoapJpaHibernate">
+        <classloader commonLibraryRef="HibernateLib"/>
+    </webApplication>
+
+    <!-- HTTP Endpoint -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                  httpPort="9080"
+                  httpsPort="9443" />
+</server>
